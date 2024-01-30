@@ -1,4 +1,13 @@
 package com.mekanapp.mekanms.place;
 
-public record PlaceCreateDto() {
+import jakarta.validation.constraints.NotNull;
+
+public record PlaceCreateDto(
+        @NotNull
+        String placeName,
+        @NotNull
+        String placeAddress,
+        @NotNull
+        String placePhoneNumber
+) {
 }

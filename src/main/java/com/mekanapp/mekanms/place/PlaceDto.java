@@ -1,4 +1,12 @@
 package com.mekanapp.mekanms.place;
 
-public record PlaceDto() {
+import java.util.UUID;
+
+public record PlaceDto(
+        UUID id,
+        String placeName,
+        String placeAddress,
+        String placePhoneNumber,
+        String placeStatus
+) {
 }
