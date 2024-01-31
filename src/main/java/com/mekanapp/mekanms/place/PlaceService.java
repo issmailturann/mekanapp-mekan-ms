@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -51,6 +52,34 @@ public class PlaceService {
             }
 
         }
+    }
+
+    public PlaceDto updatePlace(UUID id, PlaceUpdateDto placeUpdateDto) {
+        Optional<Place> existPlace = repository.findById(id);
+
+        if(existPlace.isEmpty()) {
+            throw PlaceException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.PLACE_NOT_FOUND);
+        }
+
+        Place existingPlace = existPlace.get();
+        BeanUtils.copyProperties(placeUpdateDto, existingPlace);
+        Place newResponsePlace = repository.save(existingPlace);
+
+        return placeMapper.toDto(newResponsePlace);
+
+    }
+
+    public Boolean deletePlace(UUID id) {
+        Optional<Place> existPlace = repository.findById(id);
+
+        if(existPlace.isEmpty()) {
+            throw PlaceException.withStatusAndMessage(HttpStatus.NOT_FOUND, ErrorMessages.PLACE_NOT_FOUND);
+        }
+        else {
+            repository.deleteById(id);
+            return true;
+        }
+
     }
 
 }

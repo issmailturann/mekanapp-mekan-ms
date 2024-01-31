@@ -22,8 +22,18 @@ public class PlaceController implements PlaceApi {
     }
 
     @Override
-    public ResponseEntity<Page<PlaceDto>> getAllAccounts(Pageable page, String placeName) {
+    public ResponseEntity<Page<PlaceDto>> getPlace(Pageable page, String placeName) {
         return ResponseEntity.ok(service.getPlaces(placeName, page));
+    }
+
+    @Override
+    public ResponseEntity<PlaceDto> updatePlaceById(UUID id, PlaceUpdateDto placeUpdateDto) {
+        return ResponseEntity.ok(service.updatePlace(id, placeUpdateDto));
+    }
+
+    @Override
+    public ResponseEntity<Boolean> deletePlaceById(UUID id) {
+        return ResponseEntity.ok(service.deletePlace(id));
     }
 
 }
